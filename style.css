@@ -23,13 +23,23 @@
 
   --radius:   3px;
   --radius-lg:6px;
+
+  --glass-white:  rgba(255, 255, 255, 0.65);
+  --glass-tint:   rgba(244, 243, 241, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.85);
+  --glass-shadow: 0 8px 32px rgba(44, 48, 56, 0.08), 0 1px 2px rgba(44, 48, 56, 0.04);
+  --glass-shadow-lg: 0 16px 48px rgba(44, 48, 56, 0.1), 0 2px 4px rgba(44, 48, 56, 0.05);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 
 body {
-  background: var(--white);
+  background: #f7f5f2;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 20% 10%, rgba(181,104,42,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 60%, rgba(74,81,96,0.05) 0%, transparent 60%);
+  background-attachment: fixed;
   color: var(--slate);
   font-family: var(--font-body);
   margin: 0;
@@ -53,7 +63,11 @@ h1, h2, h3, h4 { font-family: var(--font-display); }
 
 .section { padding: clamp(80px, 10vw, 120px) 0; }
 
-.section-tinted { background: var(--tint); }
+.section-tinted {
+  background: rgba(244, 243, 241, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
 
 .eyebrow {
   display: inline-flex;
@@ -198,9 +212,11 @@ h1, h2, h3, h4 { font-family: var(--font-display); }
 }
 
 #navbar.scrolled {
-  background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(16px);
-  box-shadow: 0 1px 0 var(--border);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.8), 0 2px 12px rgba(44,48,56,0.06);
+  border-bottom: 1px solid var(--glass-border);
 }
 
 .nav-inner {
@@ -368,6 +384,13 @@ h1, h2, h3, h4 { font-family: var(--font-display); }
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  padding: 7px 16px 7px 10px;
+  background: rgba(255,255,255,0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 100px;
+  box-shadow: 0 2px 8px rgba(44,48,56,0.05);
   font-family: var(--font-body);
   font-weight: 400;
   font-size: 12px;
@@ -419,10 +442,12 @@ h1, h2, h3, h4 { font-family: var(--font-display); }
 
 .hero-card {
   width: 100%;
-  border: 1px solid var(--border);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
-  background: var(--white);
-  box-shadow: 0 4px 24px rgba(44, 48, 56, 0.06), 0 1px 4px rgba(44, 48, 56, 0.04);
+  background: var(--glass-white);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: var(--glass-shadow-lg);
   overflow: hidden;
   position: relative;
   z-index: 1;
@@ -535,9 +560,11 @@ h1, h2, h3, h4 { font-family: var(--font-display); }
 ═══════════════════════════════════════════════ */
 .ticker-bar {
   overflow: hidden;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  background: var(--tint);
+  border-top: 1px solid var(--glass-border);
+  border-bottom: 1px solid rgba(224,221,216,0.6);
+  background: rgba(244,243,241,0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   padding: 14px 0;
   mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
@@ -593,8 +620,14 @@ blockquote.pull-quote {
   margin: 0 0 1.25rem;
   padding: 2.25rem 2.5rem;
   border-left: 3px solid var(--copper);
-  background: var(--tint);
+  background: var(--glass-tint);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  border-top: 1px solid var(--glass-border);
+  border-right: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
 }
 
 .pull-quote p {
@@ -649,10 +682,13 @@ blockquote.pull-quote {
 
 .pillar-mini-item {
   padding: 1.25rem;
-  border: 1px solid var(--border);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius);
-  background: var(--white);
-  transition: border-color 0.2s;
+  background: var(--glass-white);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: var(--glass-shadow);
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .pillar-mini-item:hover { border-color: var(--copper); }
@@ -681,20 +717,26 @@ blockquote.pull-quote {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
   gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
+  background: rgba(224,221,216,0.5);
+  border: 1px solid rgba(255,255,255,0.7);
   border-radius: var(--radius-lg);
   overflow: hidden;
+  box-shadow: var(--glass-shadow);
 }
 
 .div-card {
   padding: 2.25rem;
-  background: var(--white);
-  transition: background 0.2s;
+  background: var(--glass-white);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: background 0.2s, box-shadow 0.2s;
   position: relative;
 }
 
-.div-card:hover { background: var(--off-white); }
+.div-card:hover {
+  background: rgba(255,255,255,0.85);
+  box-shadow: 0 4px 20px rgba(44,48,56,0.07);
+}
 
 .div-card-top {
   display: flex;
@@ -758,10 +800,12 @@ blockquote.pull-quote {
 
 .leader-card {
   padding: 1.75rem;
-  border: 1px solid var(--border);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
-  background: var(--white);
-  transition: box-shadow 0.25s, border-color 0.25s;
+  background: var(--glass-white);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: box-shadow 0.25s, border-color 0.25s, background 0.25s;
 }
 
 .leader-card:hover {
@@ -839,9 +883,12 @@ blockquote.pull-quote {
   align-items: center;
   gap: 16px;
   padding: 1.1rem 1.5rem;
-  border: 1px solid rgba(181, 104, 42, 0.3);
+  border: 1px solid rgba(255,255,255,0.8);
   border-radius: var(--radius);
-  background: rgba(181, 104, 42, 0.04);
+  background: rgba(255,255,255,0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: var(--glass-shadow);
   margin-top: 0.5rem;
 }
 
@@ -888,7 +935,9 @@ blockquote.pull-quote {
   gap: 1rem;
   align-items: flex-start;
   padding: 1.4rem 1.5rem;
-  background: var(--white);
+  background: var(--glass-white);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   transition: background 0.2s;
 }
 
@@ -970,11 +1019,13 @@ blockquote.pull-quote {
 }
 
 .form-wrap {
-  border: 1px solid var(--border);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
   padding: 2.25rem;
-  background: var(--white);
-  box-shadow: 0 2px 16px rgba(44, 48, 56, 0.05);
+  background: var(--glass-white);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: var(--glass-shadow-lg);
 }
 
 form {
@@ -1009,8 +1060,9 @@ form {
 .field textarea {
   width: 100%;
   padding: 10px 13px;
-  background: var(--tint);
-  border: 1px solid var(--border);
+  background: rgba(244,243,241,0.6);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.7);
   border-radius: var(--radius);
   font-family: var(--font-body);
   font-weight: 300;
@@ -1269,8 +1321,9 @@ form {
   position: fixed;
   inset: 0;
   z-index: 200;
-  background: rgba(44, 48, 56, 0.45);
-  backdrop-filter: blur(6px);
+  background: rgba(244, 243, 241, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1286,10 +1339,12 @@ form {
 }
 
 .modal-box {
-  background: var(--white);
+  background: rgba(255,255,255,0.82);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   border-radius: var(--radius-lg);
-  border: 1px solid var(--border);
-  box-shadow: 0 24px 64px rgba(44, 48, 56, 0.14);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 24px 64px rgba(44, 48, 56, 0.14), inset 0 1px 0 rgba(255,255,255,0.9);
   padding: 2.5rem;
   max-width: 640px;
   width: 100%;
@@ -1393,4 +1448,34 @@ form {
   width: auto;
   display: block;
   margin-bottom: 0.9rem;
+}
+
+/* ═══════════════════════════════════════════════
+   SECTION CANVAS BACKGROUNDS
+═══════════════════════════════════════════════ */
+.section-canvas {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 70%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.55;
+}
+
+/* Ensure sections that have canvases are positioned */
+#hero,
+#divisions,
+#contact {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Keep all content above canvas */
+#hero > *:not(.section-canvas),
+#divisions > *:not(.section-canvas),
+#contact > *:not(.section-canvas) {
+  position: relative;
+  z-index: 1;
 }
